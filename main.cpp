@@ -6,6 +6,8 @@
 #include "EuOption.h"
 #include "CRRBinomialTree.h"
 #include "BinLattice.h"
+#include "MonteCarlo.h"
+#include <chrono>
 
 using namespace std;
 
@@ -35,7 +37,10 @@ int main(int argc, char **argv)
 	BinLattice binLat;
 	binLat.setN(3);
 	binLat.setNode(1, 1, 4);
-	cout << binLat.getNode(1, 1) << endl;
+	//cout << binLat.getNode(1, 1) << endl;
 	//binLat.display();
+	Type2 t = call2;
+	MonteCarlo mc(0.03, 0.25, 100, 1, 100, 0, t);
+	mc.riskyAsset(3);
 	return 0;
 }
