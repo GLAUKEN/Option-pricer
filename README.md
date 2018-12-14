@@ -1,6 +1,6 @@
 # Options pricing
 
-Calculate price of European Option with Black-Scholes' model and Binomial model.
+Calculate price of European Option with Black-Scholes' model and binomial model by using the Cox-Ross-Rubinstein procedure.
 
 # Definitions
 
