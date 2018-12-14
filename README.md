@@ -12,4 +12,6 @@ Let r be the risk-free interest rate
 
 Let T be the expiry date (maturity)
 
+Let t be the time
+
 Let sigma be the volatility
