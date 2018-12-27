@@ -7,8 +7,9 @@
 
 using namespace std;
 
-EuOption::EuOption(double _r, double _sigma, double _K, double _T, double _S, double _b, Type _type) :
+EuOption::EuOption(double _r, double _sigma, double _K, double _T, double _S, int _N, double _b, Type _type) :
 Option(_S, _K, _r, _T, _sigma, _type) {
+	N = _N;
 	b = _b;
 }
 EuOption::~EuOption() {
@@ -28,6 +29,7 @@ void EuOption::display() {
 	}
 	cout << "------------------------------" << endl;
 }
+//estimation of the standart normal distribution with Taylor formulas
 double EuOption::approxN(const double& x) {
 	double k = 1.0/(1.0 + 0.2316419*x);
 	double k_sum = k*(0.319381530 + k*(-0.356563782 + k*(1.781477937 + k*(-1.821255978 + 1.330274429*k))));
@@ -69,4 +71,64 @@ double EuOption::payOff(double S) {
 		cout << "[ERROR] : Parameter negative in PayOff !" << endl;
 		return -1;
 	}
+}
+
+//implementation of the binomial model
+
+double EuOption::up(int i) {
+	return pow(exp(sigma * sqrt(T / N)), i);
+}
+double EuOption::down(int i) {
+	return pow(exp(-sigma * sqrt(T / N)), i);
+}
+double EuOption::riskNeutralProbability() {
+	return (exp(r * T / N) - down(1)) / (up(1) - down(1));
+}
+//stock price at node (n, i)
+double EuOption::stock(int n, int i) {
+	return S * up(i) * down(n - i);
+}
+
+double EuOption::price() {
+	double * arr = new double[N + 1];
+	double q = riskNeutralProbability();
+	for (int i = 0; i <= N; i++) {
+		arr[i] = payOff(stock(N, i));
+	}
+	for (int n = N - 1; n >= 0; n--) {
+		for (int i = 0; i <= n; i++) {
+			arr[i] = (q * (arr[i + 1]) + (1 - q) * (arr[i])) / exp(r * T / N);
+		}
+	}
+	return arr[0];
+}
+double EuOption::factorielle(int n) {
+	return n > 1 ? factorielle(n - 1) * n : 1;
+}
+double EuOption::closedForm() {
+	double result = 0;
+	double q = riskNeutralProbability();
+	for (int i = 0; i < N; i++) {
+		result += factorielle(N) / (factorielle(i) * factorielle(N - i)) * pow(q, i) 
+		* pow(1 - q, N - i) * payOff(stock(N, i));
+	}
+	return result / exp(r * T);
+}
+double EuOption::max(double a, double b) {
+	return a < b ? b : a;
+}
+double EuOption::monteCarlo(int steps) {
+	std::default_random_engine generator;
+	std::normal_distribution<double> distribution (0.0, 1.0);
+	double H = 0;
+	double St = 0;
+	for (int i = 0; i < steps; i++) {
+		St = S * exp((r - 0.5 * sigma * sigma) * T + sigma * sqrt(T) * distribution(generator));
+		if (type == call) {
+			H += max(St - K, 0.0);
+		} else {
+			H += max(K - St, 0.0);
+		}
+	}
+	return exp(-r * T) * H / double(steps);
 }

@@ -14,7 +14,7 @@ void BinLattice::setN(int _N) {
 	N = _N;
 	lattice.resize(N + 1);
 	for (int i = 0; i < N + 1; i++) {
-		lattice[i].resize(2 * i);
+		lattice[i].resize(i + 1);
 	}
 }
 void BinLattice::setNode(int n, int i, double val) {
@@ -30,12 +30,18 @@ double BinLattice::getNode(int n, int i) {
 	vector<double> vec = lattice[n];
 	return vec[i];
 }
+vector<double> BinLattice::getVector(int n) {
+	return lattice[n];
+}
+void BinLattice::setVector(int n, vector<double> vec) {
+	lattice[n] = vec;
+}
 void BinLattice::display() {
 	vector<double> vec;
-	for (int i = 0; i < lattice.size() + 1; i++) {
+	for (int i = 0; i < N + 1; i++) {
 		vec = lattice[i];
-		for (int j = 0; j < vec.size(); j++) {
-			cout << "Node(" << i - 1 << ", " << j << ")" << endl;
+		for (int j = 0; j < i + 1; j++) {
+			cout << "Node(" << i << ", " << j << ")" << endl;
 			cout << vec[j] << endl;
 		}
 	}

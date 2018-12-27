@@ -15,6 +15,8 @@ public:
 	void setN(int _N);
 	void setNode(int n, int i, double val);
 	double getNode(int n, int i);
+	vector<double> getVector(int n);
+	void setVector(int n, vector<double> vec);
 	void display();
 };
 
