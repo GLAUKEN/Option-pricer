@@ -1,6 +1,6 @@
 # Options pricing
 
-Calculate price of European Option with Black-Scholes' model and binomial model by using the Cox-Ross-Rubinstein procedure.
+Modeling of several Options (European, American, Asian and Digital) with different option pricer such as the Black & Scholes formula, Closed-form formula, Cox-Ross-Rubinstein procedure and Monte Carlo method
 
 # Definitions
 
@@ -13,5 +13,7 @@ Let r be the risk-free interest rate
 Let T be the expiry date (maturity)
 
 Let t be the time
+
+Let N be the number of iterations
 
 Let sigma be the volatility
