@@ -17,19 +17,19 @@ int main(int argc, char **argv)
 	Type type2 = put;
 	EuOption euCall(0.03, 0.25, 100, 1, 100, 100, 0, type);
 	EuOption euPut(0.03, 0.25, 100, 1, 100, 100, 0, type2);
-	cout << "Black & Scholes formula : " << endl;
+	cout << "European Option - Black & Scholes formula : " << endl;
 	cout << "Call : " << euCall.blackScholesFormula(0.5) << endl;
 	cout << "Put  : " << euPut.blackScholesFormula(0.5) << endl;
 	cout << "-------------------" << endl;
-	cout << "delta : " << endl;
+	cout << "European Option - Delta : " << endl;
 	cout << "Call : " << euCall.delta(0.5) << endl;
 	cout << "Put  : " << euPut.delta(0.5) << endl;
 	cout << "-------------------" << endl;
-	cout << "Price : " << endl;
+	cout << "European Option - Price : " << endl;
 	cout << "Call : " << euCall.price() << endl;
 	cout << "Put  : " << euPut.price() << endl;
 	cout << "-------------------" << endl;
-	cout << "Closed-Form formula : " << endl;
+	cout << "European Option - Closed-Form formula : " << endl;
 	cout << "Call : " << euCall.closedForm() << endl;
 	cout << "Put  : " << euPut.closedForm() << endl;
 	/*
@@ -40,16 +40,16 @@ int main(int argc, char **argv)
 	binLat.display();
 	 */
 	cout << "-------------------" << endl;
-	cout << "EuOption Monte Carlo :" << endl;
+	cout << "European Option - Monte Carlo :" << endl;
 	cout << "Call : " << euCall.monteCarlo(10000) << endl;
 	cout << "Put  : " << euPut.monteCarlo(10000) << endl;
 	cout << "-------------------" << endl;
-	cout << "AsianOption Monte Carlo :" << endl;
+	cout << "Asian Option Monte Carlo :" << endl;
 	AsianOption asianOp(0.03, 0.25, 100, 1, 100, type);
 	cout << "Call : " << asianOp.monteCarlo(1000000) << endl;
 	cout << "-------------------" << endl;
 	AmericanOption americanOp(0.03, 0.25, 100, 1, 100, 100, type);
-	cout << "American Option B & S :" << endl;
+	cout << "American Option Black & Scholes :" << endl;
 	cout << "Call : " << americanOp.blackScholesFormula(0.5) << endl;
 	cout << "-------------------" << endl;
 	cout << "American Option binomial :" << endl;
